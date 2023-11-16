@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "toy_project",
+        "name": "toy_system",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/bin/toy_project",
+        "program": "${workspaceFolder}/bin/toy_system",
         "args": [
         ],
         "stopAtEntry": true,

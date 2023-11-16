@@ -25,6 +25,15 @@ int create_input()
     printf("여기서 input 프로세스를 생성합니다.\n");
 
     /* fork 를 이용하세요 */
-
+    if(systemPid = fork())
+    {
+        int status;
+        pid_t child_pid = wait(&status);
+    }
+    else
+    {
+        input();
+        exit(EXIT_SUCCESS);
+    }
     return 0;
 }

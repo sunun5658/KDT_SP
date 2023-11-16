@@ -15,6 +15,17 @@ int create_gui()
     /* fork + exec 를 이용하세요 */
     /* exec으로 google-chrome-stable을 실행 하세요. */
     /* (execl("/usr/bin/google-chrome-stable", "google-chrome-stable", "http://localhost:8282", NULL)) */
+    if(systemPid == fork())
+    {
+        int status;
+        pid_t child_pid = wait(&status);
+    }
+    else
+    {
+        execl("/usr/bin/google-chrome-stable", "google-chrome-stable", "http://localhost:8282", NULL);
+        exit(EXIT_SUCCESS);
+    }
+    
 
     return 0;
 }
