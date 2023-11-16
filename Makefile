@@ -1,29 +1,35 @@
-# gcc 옵션
-CFLAGS = -Wall -O -g
+TARGET = toy_system
+
+SYSTEM = ./system
+UI = ./ui
+WEB_SERVER = ./web_server
+
+INCLUDES = -I$(SYSTEM) -I$(UI) -I$(WEB_SERVER)
+
 CC = gcc
 
+objects = main.o system_server.o web_server.o input.o gui.o
 
-# Target 지정
-TARGET_NAME = toy_project
-TARGET_DIR = ./bin/
+.PHONY: clean
 
-#소스파일 위치
-DIRS = ./ ./system ./ui/ ./web_server/
+$(TARGET): $(objects)
+	$(CC) -o $(TARGET) $(objects)
 
-TARGET = $(addprefix $(TARGET_DIR),$(TARGET_NAME))
-SRCS = $(foreach dir, $(DIRS), $(wildcard $(dir)*.c))
-OBJS = $(SRCS: .c = .o)
+main.o:  main.c
+	$(CC) -g $(INCLUDES) -c main.c
 
-#헤더파일 -I 인클루드
-INC_DIR = $(foreach dir, $(DIRS),-I$(dir))
+system_server.o: $(SYSTEM)/system_server.h $(SYSTEM)/system_server.c
+	$(CC) -g $(INCLUDES) -c ./system/system_server.c
 
-all : $(TARGET)
+gui.o: $(UI)/gui.h $(UI)/gui.c
+	$(CC) -g $(INCLUDES) -c $(UI)/gui.c
 
-$(TARGET) : $(OBJS)
-	$(CC) $(CFLAGS) $(INC_DIR) -o $@ $^
+input.o: $(UI)/input.h $(UI)/input.c
+	$(CC) -g $(INCLUDES) -c $(UI)/input.c
 
-%.o : %.c
-	$(CC) $(CFLAGS) $(INC_DIR) -o $@ -c $<
+web_server.o: $(WEB_SERVER)/web_server.h $(WEB_SERVER)/web_server.c
+	$(CC) -g $(INCLUDES) -c $(WEB_SERVER)/web_server.c
 
-clean :
-	@ rm -f $(TARGET) $(OBJS)
+clean:
+	rm -rf *.o
+	rm -rf $(TARGET)
