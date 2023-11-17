@@ -10,24 +10,7 @@
 /* 여기서 sigchld 핸들러 구현 */
 static void sigchldHandler(int sig)
 {
-    int status, savedErrno;
-    pid_t childPid;
-
-    savedErrno = errno;
-
     printf("handler: Caught SIGCHLD : %d\n", sig);
-
-    while ((childPid = waitpid(-1, &status, WNOHANG)) > 0) {
-        printf("handler: Reaped child %ld - ", (long) childPid);
-        (NULL, status);
-    }
-
-    if (childPid == -1 && errno != ECHILD)
-        printf("waitpid");
-
-    printf("handler: returning\n");
-
-    errno = savedErrno;
 }
 
 int main()
