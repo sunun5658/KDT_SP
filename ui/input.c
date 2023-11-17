@@ -59,12 +59,19 @@ void segfault_handler(int sig_num, siginfo_t * info, void * ucontext) {
 
 int input()
 {
-    printf("나 input 프로세스!\n");
+    printf("나 input 프로세스! %d\n",getpid());
 
     /* 여기서 SIGSEGV 시그널 등록 */
-    if(signal(SIGSEGV,segfault_handler) == SIG_ERR)
-        errExit("signal");
-        
+    struct sigaction sa;
+
+    memset(&sa, 0, sizeof(sigaction));
+    sigemptyset(&sa.sa_mask);
+
+    sa.sa_flags = SA_RESTART | SA_SIGINFO;
+    sa.sa_sigaction = segfault_handler;
+
+    sigaction(SIGSEGV, &sa, NULL);
+
     while (1) {
         sleep(1);
     }
