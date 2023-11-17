@@ -54,10 +54,10 @@ int system_server()
     sev.sigev_notify = SIGEV_SIGNAL;    /* Notify via signal */
     sev.sigev_signo = SIGRTMAX;        /* Notify using this signal */
     
-    ts.it_value.tv_sec = 5;
+    ts.it_value.tv_sec = 1;
     ts.it_value.tv_nsec = 0;
 
-    ts.it_interval.tv_sec = 1;  // 주기 값 설정 (예시로 초기 값과 동일하게 설정)
+    ts.it_interval.tv_sec = 5;  // 주기 값 설정 (예시로 초기 값과 동일하게 설정)
     ts.it_interval.tv_nsec = 0;
     // ts.it_interval = 5;
     // ts.it_value = 0;
